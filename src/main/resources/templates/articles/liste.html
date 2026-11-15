@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockIMS - Articles</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/app.js}" defer></script>
+</head>
+<body>
+<header th:replace="~{fragments/layout :: entete('articles')}"></header>
+
+<main class="page conteneur">
+    <div class="page__tete">
+        <h1>Les articles</h1>
+        <a class="bouton" th:href="@{/articles/nouveau}">Ajouter un article</a>
+    </div>
+
+    <div class="message message--succes" role="status" th:if="${succes}">
+        <p th:text="${succes}">Article ajouté.</p>
+        <button type="button" class="message__fermer" data-fermer hidden
+                aria-label="Fermer le message">&times;</button>
+    </div>
+
+    <!-- Zone de recherche : masquée tant que JavaScript n'est pas actif -->
+    <div class="recherche" id="zone-recherche" th:unless="${#lists.isEmpty(articles)}" hidden>
+        <label for="recherche">Rechercher un article</label>
+        <input type="search" id="recherche" placeholder="Référence ou désignation" autocomplete="off">
+        <span class="recherche__compteur" id="compteur-resultats" aria-live="polite"></span>
+    </div>
+
+    <div class="tableau-conteneur" th:unless="${#lists.isEmpty(articles)}">
+        <table class="tableau--empile" id="tableau-articles">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Désignation</th>
+                <th scope="col" class="num">Stock</th>
+                <th scope="col">Détail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="a : ${articles}">
+                <td data-label="ID" th:text="${a.id}">1</td>
+                <td data-label="Référence" th:text="${a.reference}">TIS-001</td>
+                <td data-label="Désignation" th:text="${a.designation}">Rouleau de coton</td>
+                <td data-label="Stock" class="num">
+                    <span class="pastille"
+                          th:classappend="${stocks.get(a.id) == 0} ? 'pastille--vide'"
+                          th:text="${stocks.get(a.id)}">0</span>
+                </td>
+                <td data-label="Détail">
+                    <a th:href="@{/stock/{id}(id=${a.id})}">Voir le stock</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="vide" id="aucun-resultat" hidden>Aucun article ne correspond à cette recherche.</p>
+
+    <p class="vide" th:if="${#lists.isEmpty(articles)}">
+        Aucun article pour le moment.
+        <a th:href="@{/articles/nouveau}">Ajoutez le premier article</a>
+        pour pouvoir enregistrer des entrées et des sorties.
+    </p>
+</main>
+
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+</body>
+</html>

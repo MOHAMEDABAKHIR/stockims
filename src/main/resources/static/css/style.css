@@ -1,0 +1,280 @@
+/* ==========================================================
+   StockIMS - identité visuelle "atelier textile"
+   Indigo du denim, ruban de couturière jaune, papier clair.
+   ========================================================== */
+:root {
+    --indigo: #1e2f55;
+    --indigo-clair: #3b5a98;
+    --indigo-pale: #e4e9f3;
+    --papier: #eef1f5;
+    --surface: #ffffff;
+    --texte: #1d2433;
+    --texte-doux: #5a6479;
+    --trait: #cfd6e3;
+    --ruban: #f2c230;
+    --entree: #1f7a5a;
+    --entree-fonce: #175c44;
+    --sortie: #b3382a;
+    --sortie-fonce: #8c2a1f;
+    --erreur-fond: #fbeae7;
+    --succes-fond: #e3f3ec;
+    --rayon: 4px;
+    --police-titre: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
+    --police-texte: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { font-size: 100%; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--papier);
+    color: var(--texte);
+    font-family: var(--police-texte);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+}
+main { flex: 1; }
+
+.conteneur { width: min(100% - 2rem, 62rem); margin-inline: auto; }
+
+h1, h2 {
+    font-family: var(--police-titre);
+    color: var(--indigo);
+    line-height: 1.2;
+    margin: 0 0 .75rem;
+}
+h1 { font-size: 2rem; font-weight: 700; }
+h2 { font-size: 1.35rem; font-weight: 700; }
+p { margin: 0 0 1rem; max-width: 65ch; }
+
+a { color: var(--indigo-clair); }
+a:hover { color: var(--indigo); }
+:focus-visible { outline: 3px solid var(--indigo-clair); outline-offset: 2px; }
+
+/* ---------- En-tête et ruban ---------- */
+.entete { background: var(--indigo); color: #fff; }
+.entete__contenu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem 2rem;
+    padding-block: 1rem .9rem;
+}
+.marque { text-decoration: none; color: #fff; display: flex; flex-direction: column; line-height: 1.15; }
+.marque:hover { color: #fff; }
+.marque__nom { font-family: var(--police-titre); font-size: 1.6rem; font-weight: 700; letter-spacing: .02em; }
+.marque__sous { font-size: .85rem; color: #c3cde4; }
+
+.menu { display: flex; flex-wrap: wrap; gap: .25rem; }
+.menu__lien {
+    color: #fff;
+    text-decoration: none;
+    padding: .4rem .8rem;
+    border-radius: var(--rayon);
+    border-bottom: 3px solid transparent;
+}
+.menu__lien:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+.menu__lien--actif { border-bottom-color: var(--ruban); font-weight: 600; }
+
+/* Le ruban de couturière : graduations qui courent sous l'en-tête */
+.metre {
+    height: 18px;
+    background-color: var(--ruban);
+    background-image:
+        repeating-linear-gradient(90deg, var(--indigo) 0 1px, transparent 1px 8px),
+        repeating-linear-gradient(90deg, var(--indigo) 0 2px, transparent 2px 40px);
+    background-size: 100% 6px, 100% 12px;
+    background-position: 0 100%, 0 100%;
+    background-repeat: repeat-x;
+}
+
+/* ---------- Contenu ---------- */
+.page { padding-block: 2rem 3rem; }
+.page__tete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem 1.5rem;
+    margin-bottom: 1.25rem;
+}
+.page__tete h1 { margin: 0; }
+.chapeau { color: var(--texte-doux); font-size: 1.1rem; }
+.lien-retour { display: inline-block; margin-top: 1.5rem; }
+
+/* ---------- Boutons ---------- */
+.bouton {
+    display: inline-block;
+    border: 2px solid var(--indigo);
+    border-radius: var(--rayon);
+    background: var(--indigo);
+    color: #fff;
+    padding: .55rem 1.1rem;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s, border-color .15s;
+}
+.bouton:hover { background: var(--indigo-clair); border-color: var(--indigo-clair); color: #fff; }
+.bouton--secondaire { background: transparent; color: var(--indigo); }
+.bouton--secondaire:hover { background: var(--indigo-pale); color: var(--indigo); border-color: var(--indigo); }
+.bouton--entree { background: var(--entree); border-color: var(--entree); }
+.bouton--entree:hover { background: var(--entree-fonce); border-color: var(--entree-fonce); }
+.bouton--sortie { background: var(--sortie); border-color: var(--sortie); }
+.bouton--sortie:hover { background: var(--sortie-fonce); border-color: var(--sortie-fonce); }
+
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+/* ---------- Messages ---------- */
+.message {
+    border-left: 5px solid;
+    border-radius: var(--rayon);
+    padding: .75rem 1rem;
+    margin-bottom: 1.25rem;
+}
+.message p { margin: 0; }
+.message--succes { background: var(--succes-fond); border-color: var(--entree); color: #12432f; }
+.message--erreur { background: var(--erreur-fond); border-color: var(--sortie); color: #6e1d14; }
+
+/* ---------- Formulaires ---------- */
+.formulaire {
+    background: var(--surface);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon);
+    padding: 1.5rem;
+    max-width: 34rem;
+}
+.champ { margin-bottom: 1.25rem; }
+.champ label { display: block; font-weight: 600; margin-bottom: .3rem; }
+.champ .aide { display: block; color: var(--texte-doux); font-size: .9rem; margin-bottom: .35rem; }
+.champ input {
+    width: 100%;
+    font: inherit;
+    padding: .55rem .7rem;
+    border: 2px solid var(--trait);
+    border-radius: var(--rayon);
+    background: #fff;
+    color: var(--texte);
+}
+.champ input:focus { border-color: var(--indigo-clair); outline: none; box-shadow: 0 0 0 3px var(--indigo-pale); }
+.champ input.champ--invalide { border-color: var(--sortie); background: var(--erreur-fond); }
+.erreur { display: block; color: var(--sortie-fonce); font-size: .95rem; font-weight: 600; margin-top: .3rem; }
+
+/* ---------- Tableaux ---------- */
+.tableau-conteneur { background: var(--surface); border: 1px solid var(--trait); border-radius: var(--rayon); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+caption { text-align: left; padding: .75rem 1rem; font-family: var(--police-titre); font-weight: 700; color: var(--indigo); }
+th, td { padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--trait); }
+thead th { background: var(--indigo-pale); color: var(--indigo); font-weight: 700; border-bottom: 2px solid var(--indigo); }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #f7f9fc; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.pastille {
+    display: inline-block;
+    min-width: 2.6rem;
+    text-align: center;
+    padding: .1rem .6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    background: var(--succes-fond);
+    color: var(--entree-fonce);
+}
+.pastille--vide { background: var(--erreur-fond); color: var(--sortie-fonce); }
+
+.vide { padding: 1.5rem 1rem; color: var(--texte-doux); margin: 0; }
+
+/* ---------- Recherche (affichée uniquement si JavaScript est actif) ---------- */
+.recherche { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-bottom: 1rem; }
+.recherche label { font-weight: 600; }
+.recherche input {
+    flex: 1 1 16rem;
+    font: inherit;
+    padding: .5rem .7rem;
+    border: 2px solid var(--trait);
+    border-radius: var(--rayon);
+}
+.recherche input:focus { border-color: var(--indigo-clair); outline: none; box-shadow: 0 0 0 3px var(--indigo-pale); }
+.recherche__compteur { color: var(--texte-doux); font-size: .95rem; }
+
+/* ---------- Fiche de stock ---------- */
+.reference { color: var(--texte-doux); margin-bottom: 1.25rem; }
+.reference strong { color: var(--texte); }
+
+.stock {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .25rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--trait);
+    border-left: 10px solid var(--entree);
+    border-radius: var(--rayon);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.stock--vide { border-left-color: var(--sortie); }
+.stock__valeur { font-family: var(--police-titre); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--entree-fonce); font-variant-numeric: tabular-nums; }
+.stock--vide .stock__valeur { color: var(--sortie-fonce); }
+.stock__libelle { font-weight: 600; }
+.stock__note { flex-basis: 100%; margin: 0; color: var(--sortie-fonce); font-weight: 600; }
+
+.mouvement { margin-bottom: 2rem; }
+.mouvement .champ { max-width: 14rem; }
+.mouvement .aide--bas { color: var(--texte-doux); font-size: .9rem; margin: .75rem 0 0; }
+
+.historique { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+.historique__bloc--entree thead th { border-bottom-color: var(--entree); }
+.historique__bloc--sortie thead th { border-bottom-color: var(--sortie); }
+
+/* ---------- Accueil ---------- */
+.accueil { max-width: 44rem; }
+.accueil .actions { margin: 1.5rem 0 2rem; }
+.formule {
+    background: var(--surface);
+    border: 1px solid var(--trait);
+    border-left: 6px solid var(--ruban);
+    border-radius: var(--rayon);
+    padding: 1rem 1.25rem;
+}
+.formule p { margin: 0 0 .4rem; }
+.formule p:last-child { margin: 0; }
+
+/* ---------- Pied de page ---------- */
+.pied { background: var(--indigo); color: #c3cde4; font-size: .9rem; padding-block: 1rem; }
+.pied p { margin: 0; max-width: none; }
+
+/* ---------- Petits écrans ---------- */
+@media (max-width: 720px) {
+    h1 { font-size: 1.6rem; }
+    .historique { grid-template-columns: 1fr; }
+    .formulaire { padding: 1rem; }
+    .stock__valeur { font-size: 2.4rem; }
+}
+@media (max-width: 640px) {
+    /* chaque ligne du tableau des articles devient une fiche */
+    .tableau--empile thead { position: absolute; left: -9999px; }
+    .tableau--empile, .tableau--empile tbody, .tableau--empile tr, .tableau--empile td { display: block; width: 100%; }
+    .tableau--empile tr { padding: .5rem 0; border-bottom: 2px solid var(--trait); }
+    .tableau--empile tbody tr:last-child { border-bottom: none; }
+    .tableau--empile td { border: none; padding: .25rem 1rem; text-align: left; }
+    .tableau--empile td::before { content: attr(data-label) " : "; font-weight: 600; color: var(--indigo); }
+    .tableau--empile td.num { text-align: left; }
+    .actions .bouton { flex: 1 1 100%; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Bouton de fermeture d'un message (visible seulement avec JavaScript) */
+.message { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.message__fermer { background: none; border: none; font-size: 1.4rem; line-height: 1; cursor: pointer; color: inherit; padding: 0 .25rem; }

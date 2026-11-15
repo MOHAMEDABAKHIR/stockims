@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockIMS - Nouvel article</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: entete('nouveau')}"></header>
+
+<main class="page conteneur">
+    <h1>Nouvel article</h1>
+
+    <!-- novalidate : c'est le serveur qui valide et qui affiche les messages -->
+    <form class="formulaire" th:action="@{/articles}" th:object="${article}"
+          method="post" novalidate>
+
+        <div class="message message--erreur" role="alert" th:if="${#fields.hasErrors('*')}">
+            <p>L'article n'a pas été enregistré. Corrigez les champs signalés ci-dessous.</p>
+        </div>
+
+        <div class="champ">
+            <label for="reference">Référence</label>
+            <span class="aide">Code unique de l'article, 20 caractères au maximum.</span>
+            <input id="reference" th:field="*{reference}" maxlength="60"
+                   th:errorclass="champ--invalide" autocomplete="off">
+            <span class="erreur" th:errors="*{reference}"></span>
+        </div>
+
+        <div class="champ">
+            <label for="designation">Désignation</label>
+            <span class="aide">Nom de l'article, 80 caractères au maximum.</span>
+            <input id="designation" th:field="*{designation}" maxlength="120"
+                   th:errorclass="champ--invalide" autocomplete="off">
+            <span class="erreur" th:errors="*{designation}"></span>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="bouton">Enregistrer l'article</button>
+            <a class="bouton bouton--secondaire" th:href="@{/articles}">Annuler</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+</body>
+</html>

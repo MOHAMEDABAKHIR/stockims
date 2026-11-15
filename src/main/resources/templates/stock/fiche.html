@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockIMS - Stock</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/app.js}" defer></script>
+</head>
+<body>
+<header th:replace="~{fragments/layout :: entete('articles')}"></header>
+
+<main class="page conteneur">
+    <h1 th:text="${article.designation}">Article</h1>
+    <p class="reference">Référence : <strong th:text="${article.reference}">TIS-001</strong></p>
+
+    <div class="message message--succes" role="status" th:if="${succes}">
+        <p th:text="${succes}">Mouvement enregistré.</p>
+        <button type="button" class="message__fermer" data-fermer hidden
+                aria-label="Fermer le message">&times;</button>
+    </div>
+
+    <section class="stock" th:classappend="${stock <= 0} ? 'stock--vide'"
+             aria-label="Stock disponible">
+        <span class="stock__valeur" th:text="${stock}">0</span>
+        <span class="stock__libelle">unité(s) en stock</span>
+        <p class="stock__note" th:if="${stock <= 0}">
+            Aucune unité disponible : enregistrez d'abord une entrée.
+        </p>
+    </section>
+
+    <!-- novalidate : c'est le serveur qui valide et qui affiche les messages -->
+    <form class="formulaire mouvement" method="post" th:object="${mouvement}"
+          th:action="@{/stock/{id}/entrees(id=${article.id})}" novalidate>
+        <h2>Enregistrer un mouvement</h2>
+
+        <div class="message message--erreur" role="alert"
+             th:each="erreur : ${#fields.globalErrors()}">
+            <p th:text="${erreur}">Erreur</p>
+        </div>
+
+        <div class="champ">
+            <label for="quantite">Quantité</label>
+            <input type="number" step="1" th:field="*{quantite}"
+                   th:errorclass="champ--invalide" inputmode="numeric">
+            <span class="erreur" th:errors="*{quantite}"></span>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="bouton bouton--entree">Enregistrer une entrée</button>
+            <button type="submit" class="bouton bouton--sortie"
+                    th:formaction="@{/stock/{id}/sorties(id=${article.id})}"
+                    data-confirmation th:data-article="${article.designation}">
+                Enregistrer une sortie
+            </button>
+        </div>
+        <p class="aide--bas">La date du jour sera enregistrée.</p>
+    </form>
+
+    <h2>Historique des mouvements</h2>
+    <div class="historique">
+        <div class="tableau-conteneur historique__bloc--entree">
+            <table>
+                <caption>Entrées</caption>
+                <thead>
+                <tr><th scope="col">Date</th><th scope="col" class="num">Quantité</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="e : ${entrees}">
+                    <td th:text="${e.dateMouvement}">2026-11-15</td>
+                    <td class="num" th:text="${e.quantite}">20</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="vide" th:if="${#lists.isEmpty(entrees)}">Aucune entrée enregistrée.</p>
+        </div>
+
+        <div class="tableau-conteneur historique__bloc--sortie">
+            <table>
+                <caption>Sorties</caption>
+                <thead>
+                <tr><th scope="col">Date</th><th scope="col" class="num">Quantité</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="s : ${sorties}">
+                    <td th:text="${s.dateMouvement}">2026-11-15</td>
+                    <td class="num" th:text="${s.quantite}">7</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="vide" th:if="${#lists.isEmpty(sorties)}">Aucune sortie enregistrée.</p>
+        </div>
+    </div>
+
+    <a class="lien-retour" th:href="@{/articles}">Retour aux articles</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+</body>
+</html>

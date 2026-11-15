@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockIMS - Accueil</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: entete('accueil')}"></header>
+
+<main class="page conteneur accueil">
+    <h1 th:text="${message}">Bienvenue</h1>
+    <p class="chapeau">Gestion des articles, des entrées et des sorties.</p>
+
+    <div class="actions">
+        <a class="bouton" th:href="@{/articles}">Voir les articles</a>
+        <a class="bouton bouton--secondaire" th:href="@{/articles/nouveau}">Ajouter un article</a>
+    </div>
+
+    <section class="formule" aria-labelledby="titre-calcul">
+        <h2 id="titre-calcul">Comment le stock est calculé</h2>
+        <p>Le stock d'un article n'est jamais saisi à la main : il est recalculé à chaque affichage.</p>
+        <p><strong>Stock = somme des entrées − somme des sorties.</strong></p>
+        <p>Un article sans mouvement a donc un stock de 0, et une sortie ne peut jamais dépasser le stock disponible.</p>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+</body>
+</html>

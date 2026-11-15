@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- En-tête commun : le paramètre "actif" met en évidence la page courante -->
+<header class="entete" th:fragment="entete(actif)">
+    <div class="entete__contenu conteneur">
+        <a class="marque" th:href="@{/}">
+            <span class="marque__nom">StockIMS</span>
+            <span class="marque__sous">Articles, entrées et sorties</span>
+        </a>
+        <nav class="menu" aria-label="Navigation principale">
+            <a class="menu__lien" th:href="@{/}"
+               th:classappend="${actif == 'accueil'} ? 'menu__lien--actif'"
+               th:aria-current="${actif == 'accueil'} ? 'page'">Accueil</a>
+            <a class="menu__lien" th:href="@{/articles}"
+               th:classappend="${actif == 'articles'} ? 'menu__lien--actif'"
+               th:aria-current="${actif == 'articles'} ? 'page'">Articles</a>
+            <a class="menu__lien" th:href="@{/articles/nouveau}"
+               th:classappend="${actif == 'nouveau'} ? 'menu__lien--actif'"
+               th:aria-current="${actif == 'nouveau'} ? 'page'">Nouvel article</a>
+        </nav>
+    </div>
+    <div class="metre" aria-hidden="true"></div>
+</header>
+
+<!-- Pied de page commun -->
+<footer class="pied" th:fragment="pied">
+    <div class="conteneur">
+        <p>StockIMS : projet de gestion de stock, ESITH.</p>
+    </div>
+</footer>
+
+</body>
+</html>

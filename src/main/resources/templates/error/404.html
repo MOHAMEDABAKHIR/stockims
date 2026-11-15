@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockIMS - Page introuvable</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: entete('')}"></header>
+<main class="page conteneur">
+    <h1>Page introuvable</h1>
+    <p>Cet article ou cette page n'existe pas (ou plus).</p>
+    <a class="bouton" th:href="@{/articles}">Retour aux articles</a>
+</main>
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+</body>
+</html>
